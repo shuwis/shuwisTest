@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script>
+<!-- include aframe-ar.js -->
+<script src="js/aframe-ar.js"></script>
+<!-- Register an aframe component that allows reacting to marker events -->
+<script>
+	AFRAME.registerComponent('videohandler', {
+		init: function () {
+			var marker = this.el;
+
+			marker.addEventListener('markerFound', function() {
+				var markerId = marker.id;
+				console.log('markerFound', markerId);
+				// TODO: Add your own code here to react to the marker being found.
+				document.querySelector("#vid").play();
+			});
+
+			marker.addEventListener('markerLost', function() {
+				var markerId = marker.id;
+				console.log('markerLost', markerId);
+				// TODO: Add your own code here to react to the marker being lost.
+				document.querySelector("#vid").pause();
+			});
+		}
+	});
+</script>
+
+<body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
+	<a-scene embedded arjs='sourceType: webcam; detectionMode: mono_and_matrix; matrixCodeType: 3x3;'>
+		<a-assets>
+			<video crossOrigin="anonymous" id="vid" autoplay loop="true" type="video/mp4" src="data/vid.mp4">
+		</a-assets>
+		<!-- <a-marker preset="hiro" id='marker-hiro' videohandler> -->
+		<a-marker type='pattern' patternUrl="data/pattern-marker5.patt" videohandler>
+			<a-video src="#vid" width="1.78" height="1" rotation="270 0 0" play="true"></a-video>
+		</a-marker>
+		<!-- add a simple camera -->
+		<a-entity camera></a-entity>
+	</a-scene>
+</body>
+</html>
