@@ -76,14 +76,14 @@
 			<!-- handle hiro marker -->
 			<!-- 'registerevents' will register event listeners for the marker when it is found and lost,
 			as defined in the inline script above -->
-			<a-marker-camera preset='hiro' id='marker-hiro' registerevents>
+			<!-- <a-marker-camera preset='hiro' id='marker-hiro' registerevents> -->
 			<!-- <a-marker-camera type='pattern' url="data/pattern-marker-a-n.patt" registerevents> -->
-			<!-- <a-marker preset='hiro' id='marker-hiro' registerevents> -->
+			<a-marker preset='hiro' id='marker-hiro' registerevents>
 			<!-- <a-marker type='pattern' url="data/photo-marker-pattern.patt" registerevents> -->
 				<!-- <a-video src="#vid" width="1" height="1" position="0 0 0" rotation="270 0 0" play="true"></a-video> -->
 				<a-image src="#hiroClick" position="0 0 0" rotation="270 0 0"></a-image>
-			<!-- </a-marker> -->
-			</a-marker-camera>
+			</a-marker>
+			<!-- </a-marker-camera> -->
 
 			<!-- add a simple camera -->
 			<a-entity camera="active: true" look-controls wasd-controls position="0 0 0" data-aframe-default-camera></a-entity>
