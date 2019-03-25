@@ -19,9 +19,9 @@
 		<!-- <script src="js/aframe.js"></script> -->
 		<script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script>
 		<!-- include aframe-ar.js -->
-		<!-- <script src="js/aframe-ar.js"></script> -->
+		<script src="js/aframe-ar.js"></script>
 		<!-- <script src="js/aframe-ar_fixed.js"></script> -->
-		<script src="js/aframe-ar_242.js"></script>
+		<!-- <script src="js/aframe-ar_242.js"></script> -->
 		<!-- <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/dev/aframe/build/aframe-ar.js"></script> -->
 		<!-- Register an aframe component that allows reacting to marker events -->
 
@@ -30,48 +30,35 @@
 				init: function () {
 					//this handler don't work with a-marker-camera
 					var marker = this.el;
+					let video = document.querySelector("#vid");
+					let clickImg = document.getElementsByTagName("a-image");
 					marker.addEventListener('markerFound', function() {
 						var markerId = marker.id;
-						console.log('markerFound', markerId);
-						// TODO: Add your own code here to react to the marker being found.
-						document.querySelector("#vid").play();
+						document.onclick = function (event) {
+							if(video.paused)
+							{
+								clickImg[0].setAttribute("transparent", "false");
+								video.play();
+							}
+							else
+							{
+								clickImg[0].setAttribute("transparent", "true");
+								video.pause();
+							}
+						}
 					});
 
 					marker.addEventListener('markerLost', function() {
 						var markerId = marker.id;
-						console.log('markerLost', markerId);
+						// console.log('markerLost', markerId);
 						// TODO: Add your own code here to react to the marker being lost.
-						document.querySelector("#vid").pause();
+						if(video.played)
+						{
+							clickImg[0].setAttribute("transparent", "true");
+							video.pause();
+						}
 					});
-					// this.vidToggle = false;
-					// document.querySelector("#vid").pause();
 				},
-				// tick: function () {
-				// 	if(document.querySelector("a-marker-camera").object3D.visible == true) {
-				// 		if (!this.vidToggle) {
-				// 			this.vidToggle = true;
-				// 			var promise = document.querySelector("#vid").play();
-
-				// 			if (promise !== undefined) {
-				// 				promise.then(_ => {
-				// 					console.log('done');
-				// 				// Autoplay started!
-				// 			}).catch(error => {
-				// 				console.log(error.message);
-				// 				// Autoplay was prevented.
-				// 				// Show a "Play" button so that user can start playback.
-				// 			});
-				// 			}
-
-				// 			// document.querySelector("#vid").play().catch(function() {
-				// 			// 	console.log('err');
-				// 			// });;
-				// 		}
-				// 	} else {
-				// 		this.vidToggle = false;
-				// 		document.querySelector("#vid").pause();
-				// 	}
-				// }
 			});
 		</script>
 	</head>
@@ -81,9 +68,10 @@
 		<a-scene embedded arjs='sourceType: webcam; detectionMode: mono_and_matrix; matrixCodeType: 3x3;'>
 		<!-- <a-scene embedded arjs='sourceType: webcam;'> -->
 			<a-assets>
-				<!-- <video crossOrigin="anonymous" id="vid" autoplay loop="true" type="video/mp4" src="data/video/video_2019-03-04_12-44-59.mp4"></video> -->
-				<!-- <video crossOrigin="anonymous" id="vid" autoplay loop="true" type="video/mp4" src="data/video/vid.mp4"></video> -->
-				<img id="hiroClick" src="data/HIRO_click.jpg">
+				<video crossOrigin="anonymous" id="vid" loop="true" type="video/mp4" src="data/video/sintel.mp4" poster="data/HIRO_click.jpg"></video>
+				<!-- <video crossOrigin="anonymous" id="vid" autoplay loop="true" type="video/mp4" src="data/video/vid.mp4" style ="display:none"></video> -->
+				<!-- <img id="hiroClick" src="data/HIRO_click.jpg" style="display:none;"> -->
+				<img id="hiroClick" src="data/tap.png" style="display:none;">
 			</a-assets>
 
 			<!-- handle hiro marker -->
@@ -92,14 +80,14 @@
 			<!-- <a-marker-camera preset='hiro' id='marker-hiro' registerevents> -->
 			<!-- <a-marker-camera type='pattern' url="data/pattern-marker-a-n.patt" registerevents> -->
 			<a-marker preset='hiro' id='marker-hiro' registerevents>
-			<!-- <a-marker type='pattern' url="data/photo-marker-pattern.patt" registerevents> -->
-				<!-- <a-video src="#vid" width="1" height="1" position="0 0 0" rotation="270 0 0" play="true"></a-video> -->
+			<!-- <a-marker type='pattern' url="data/red_pattern_marker.patt" registerevents> -->
+				<a-video src="#vid" width="1" height="1" position="0 0 0" rotation="270 0 0" play="true"></a-video>
 				<a-image src="#hiroClick" rotation="270 0 0"></a-image>
 			</a-marker>
 			<!-- </a-marker-camera> -->
 
 			<!-- add a simple camera -->
-			<a-entity camera="active: true" look-controls wasd-controls position="0 1.6 0"></a-entity>
+			<a-entity camera="active: true" position="0 0 0" look-controls data-aframe-default-camera></a-entity>
 			<!-- <a-entity camera position="0 0 0"></a-entity> -->
 			<!-- <a-camera type='pattern' patternUrl='data/pattern-marker.patt'></a-camera> -->
 			<!-- <a-camera position="0 -1.6 0" zoom="0"></a-camera> -->
