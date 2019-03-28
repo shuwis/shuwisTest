@@ -71,20 +71,6 @@
 			// window.onresize = function(event) {
 			// 	resizeHandler();
 			// }
-			window.onload = function (event){
-				isLandscape();
-			}
-			function isLandscape() {
-				if (window.innerWidth > window.innerHeight) {
-					document.getElementsByTagName("video")[0].style.display = 'block';
-					document.getElementById("warning-message").style.display = 'none';
-				} else {
-					let video = document.getElementsByTagName("video")[0];
-					video.style.display = 'none';
-					document.getElementById("warning-message").style.display = 'block';
-				}
-
-			}
 			AFRAME.registerComponent('registerevents', {
 				init: function () {
 					//this handler don't work with a-marker-camera
@@ -130,6 +116,20 @@
 					});
 				},
 			});
+			// window.onload = function (event){
+				isLandscape();
+			// }
+			function isLandscape() {
+				if (window.innerWidth > window.innerHeight) {
+					document.getElementsByTagName("video")[0].style.display = 'block';
+					document.getElementById("warning-message").style.display = 'none';
+				} else {
+					let video = document.getElementsByTagName("video")[0];
+					video.style.display = 'none';
+					document.getElementById("warning-message").style.display = 'block';
+				}
+
+			}
 			// resizeHandler ();
 		</script>
 	</head>
