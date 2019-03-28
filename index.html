@@ -27,50 +27,50 @@
 		<!-- Register an aframe component that allows reacting to marker events -->
 
 		<script>
-			function resizeHandler ()
-			{
-				let videoTag = document.getElementsByTagName("video");
-				let videoTagIndex = videoTag.length - 1;
-				let videoTagStyle = videoTag[videoTagIndex].getAttribute("style");
+			// function resizeHandler ()
+			// {
+			// 	let videoTag = document.getElementsByTagName("video");
+			// 	let videoTagIndex = videoTag.length - 1;
+			// 	let videoTagStyle = videoTag[videoTagIndex].getAttribute("style");
 
-				if (window.innerWidth > window.innerHeight) {
-					// document.getElementById("warning-message").setAttribute("style", "display:none;");
-					document.getElementById("warning-message").style.display = "none";
-					// videoTag[videoTagIndex].setAttribute("style", "display:block;");
-					videoTag[videoTagIndex].style.display = 'block';
-					let canvas = document.getElementsByTagName("canvas");
-					// canvas[0].setAttribute("style", "display:block;");
-					canvas[0].style.display = 'block';
-					document.getElementById( 'video' ).play();
-				} else {
-					// document.getElementById("warning-message").setAttribute("style", "display:block;");
-					document.getElementById("warning-message").style.display = "flex";
-					// document.getElementById("warning-message").style.align-items = "center";
-					// document.getElementById("warning-message").style.justify-content = "center";
-					// videoTag[videoTagIndex].setAttribute("style", "display:none;");
-					videoTag[videoTagIndex].style.display = 'none';
-					let canvas = document.getElementsByTagName("canvas");
-					// canvas[0].setAttribute("style", "display:none;");
-					canvas[0].style.display = 'none';
-					document.getElementById( 'video' ).pause();
-				}
-			}
-			function isLandscape() {
-				let videoTag = document.getElementsByTagName("video");
-				let videoTagIndex = videoTag.length - 1;
-				if (window.innerWidth > window.innerHeight) {
-					document.getElementById("warning-message").setAttribute("style", "display:none;");
-					// videoTag[videoTagIndex].setAttribute("style", "display:block;");
-					document.getElementsByTagName("canvas")[0].style.display = 'block';
-				} else {
-					document.getElementById("warning-message").setAttribute("style", "display:block;");
-					// videoTag[videoTagIndex].setAttribute("style", "display:none;");
-					document.getElementsByTagName("canvas")[0].style.display = 'none';
-				}
-			}
-			window.onresize = function(event) {
-				resizeHandler();
-			}
+			// 	if (window.innerWidth > window.innerHeight) {
+			// 		// document.getElementById("warning-message").setAttribute("style", "display:none;");
+			// 		document.getElementById("warning-message").style.display = "none";
+			// 		// videoTag[videoTagIndex].setAttribute("style", "display:block;");
+			// 		videoTag[videoTagIndex].style.display = 'block';
+			// 		let canvas = document.getElementsByTagName("canvas");
+			// 		// canvas[0].setAttribute("style", "display:block;");
+			// 		canvas[0].style.display = 'block';
+			// 		document.getElementById( 'video' ).play();
+			// 	} else {
+			// 		// document.getElementById("warning-message").setAttribute("style", "display:block;");
+			// 		document.getElementById("warning-message").style.display = "flex";
+			// 		// document.getElementById("warning-message").style.align-items = "center";
+			// 		// document.getElementById("warning-message").style.justify-content = "center";
+			// 		// videoTag[videoTagIndex].setAttribute("style", "display:none;");
+			// 		videoTag[videoTagIndex].style.display = 'none';
+			// 		let canvas = document.getElementsByTagName("canvas");
+			// 		// canvas[0].setAttribute("style", "display:none;");
+			// 		canvas[0].style.display = 'none';
+			// 		document.getElementById( 'video' ).pause();
+			// 	}
+			// }
+			// function isLandscape() {
+			// 	let videoTag = document.getElementsByTagName("video");
+			// 	let videoTagIndex = videoTag.length - 1;
+			// 	if (window.innerWidth > window.innerHeight) {
+			// 		document.getElementById("warning-message").setAttribute("style", "display:none;");
+			// 		// videoTag[videoTagIndex].setAttribute("style", "display:block;");
+			// 		document.getElementsByTagName("canvas")[0].style.display = 'block';
+			// 	} else {
+			// 		document.getElementById("warning-message").setAttribute("style", "display:block;");
+			// 		// videoTag[videoTagIndex].setAttribute("style", "display:none;");
+			// 		document.getElementsByTagName("canvas")[0].style.display = 'none';
+			// 	}
+			// }
+			// window.onresize = function(event) {
+			// 	resizeHandler();
+			// }
 
 			AFRAME.registerComponent('registerevents', {
 				init: function () {
@@ -78,30 +78,41 @@
 					var marker = this.el;
 					let video = document.querySelector("#vid");
 					let clickImg = document.getElementsByTagName("a-image");
+					let portraitImg = document.querySelector("#portraitOrient");
 					marker.addEventListener('markerFound', function() {
 						var markerId = marker.id;
-						document.onclick = function (event) {
-							if(video.paused)
-							{
-								clickImg[0].setAttribute("transparent", "false");
-								video.play();
-							}
-							else
-							{
-								clickImg[0].setAttribute("transparent", "true");
-								video.pause();
-							}
+						if (window.innerWidth > window.innerHeight) {
+							clickImg[1].setAttribute("transparent", "false");
+							// document.onclick = function (event) {
+							document.addEventListener('click', function (event) {
+								if(video.paused)
+								{
+									clickImg[0].setAttribute("transparent", "false");
+									video.play();
+								}
+								else
+								{
+									clickImg[0].setAttribute("transparent", "true");
+									video.pause();
+								}
+							})
+						} else {
+							clickImg[1].setAttribute("transparent", "true");
+							clickImg[0].setAttribute("transparent", "false");
 						}
 					});
 
 					marker.addEventListener('markerLost', function() {
 						var markerId = marker.id;
-						// console.log('markerLost', markerId);
-						// TODO: Add your own code here to react to the marker being lost.
-						if(video.played)
-						{
-							clickImg[0].setAttribute("transparent", "true");
-							video.pause();
+						if (window.innerWidth > window.innerHeight) {
+							if(video.played)
+							{
+								clickImg[0].setAttribute("transparent", "true");
+								video.pause();
+							}
+						} else {
+							clickImg[1].setAttribute("transparent", "true");
+							clickImg[0].setAttribute("transparent", "false");
 						}
 					});
 				},
@@ -117,7 +128,7 @@
 			<a-assets>
 				<video crossOrigin="anonymous" id="vid" loop="true" type="video/mp4" src="data/video/sintel.mp4"></video>
 				<!-- <video crossOrigin="anonymous" id="vid" autoplay loop="true" type="video/mp4" src="data/video/vid.mp4" style ="display:none"></video> -->
-				<!-- <img id="hiroClick" src="data/HIRO_click.jpg" style="display:none;"> -->
+				<img id="portraitOrient" src="data/HIRO_click.jpg" style="display:none;">
 				<img id="hiroClick" src="data/tap.png" style="display:none;">
 			</a-assets>
 
@@ -130,6 +141,7 @@
 			<a-marker preset='hiro' id='marker-hiro' registerevents>
 				<a-video src="#vid" width="1" height="1" position="0 0 0" rotation="270 0 0" play="true"></a-video>
 				<a-image src="#hiroClick" rotation="270 0 0"></a-image>
+				<a-image src="#portraitOrient" rotation="270 0 0"></a-image>
 			</a-marker>
 			<!-- </a-marker-camera> -->
 
