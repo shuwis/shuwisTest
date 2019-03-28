@@ -79,7 +79,8 @@
 					document.getElementsByTagName("video")[0].style.display = 'block';
 					document.getElementById("warning-message").style.display = 'none';
 				} else {
-					document.getElementsByTagName("video")[0].style.display = 'none';
+					let video = document.getElementsByTagName("video")[0];
+					video.style.display = 'none';
 					document.getElementById("warning-message").style.display = 'block';
 				}
 
