@@ -27,6 +27,52 @@
 		<!-- Register an aframe component that allows reacting to marker events -->
 
 		<script>
+			resizeHandler ();
+			function resizeHandler ()
+			{
+				let videoTag = document.getElementsByTagName("video");
+				let videoTagIndex = videoTag.length - 1;
+				let videoTagStyle = videoTag[videoTagIndex].getAttribute("style");
+
+				if (window.innerWidth > window.innerHeight) {
+					// document.getElementById("warning-message").setAttribute("style", "display:none;");
+					document.getElementById("warning-message").style.display = "none";
+					// videoTag[videoTagIndex].setAttribute("style", "display:block;");
+					videoTag[videoTagIndex].style.display = 'block';
+					let canvas = document.getElementsByTagName("canvas");
+					// canvas[0].setAttribute("style", "display:block;");
+					canvas[0].style.display = 'block';
+					document.getElementById( 'video' ).play();
+				} else {
+					// document.getElementById("warning-message").setAttribute("style", "display:block;");
+					document.getElementById("warning-message").style.display = "flex";
+					// document.getElementById("warning-message").style.align-items = "center";
+					// document.getElementById("warning-message").style.justify-content = "center";
+					// videoTag[videoTagIndex].setAttribute("style", "display:none;");
+					videoTag[videoTagIndex].style.display = 'none';
+					let canvas = document.getElementsByTagName("canvas");
+					// canvas[0].setAttribute("style", "display:none;");
+					canvas[0].style.display = 'none';
+					document.getElementById( 'video' ).pause();
+				}
+			}
+			function isLandscape() {
+				let videoTag = document.getElementsByTagName("video");
+				let videoTagIndex = videoTag.length - 1;
+				if (window.innerWidth > window.innerHeight) {
+					document.getElementById("warning-message").setAttribute("style", "display:none;");
+					// videoTag[videoTagIndex].setAttribute("style", "display:block;");
+					document.getElementsByTagName("canvas")[0].style.display = 'block';
+				} else {
+					document.getElementById("warning-message").setAttribute("style", "display:block;");
+					// videoTag[videoTagIndex].setAttribute("style", "display:none;");
+					document.getElementsByTagName("canvas")[0].style.display = 'none';
+				}
+			}
+			window.onresize = function(event) {
+				resizeHandler();
+			}
+			
 			AFRAME.registerComponent('registerevents', {
 				init: function () {
 					//this handler don't work with a-marker-camera
@@ -65,7 +111,7 @@
 	</head>
 
 	<body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
-		<!-- <div id="wrapper"> -->
+		<div id="wrapper" style="display:none;">
 		<a-scene embedded arjs='sourceType: webcam;' vr-mode-ui="enabled: false">	<!--vr-mode-ui="enabled: false"-->
 		<!-- <a-scene embedded arjs='sourceType: webcam;'> -->
 			<a-assets>
@@ -96,9 +142,9 @@
 			</a-camera> -->
 			<!-- <a-camera position="0 -1.6 0" zoom="0"></a-camera> -->
 		</a-scene>
-		<!-- </div>
-		<div id="warning-message">
+		</div>
+		<div id="warning-message" style="display:none;">
 			this website is only viewable in landscape mode
-		</div> -->
+		</div>
 	</body>
 </html>
