@@ -27,70 +27,13 @@
 		<!-- Register an aframe component that allows reacting to marker events -->
 
 		<script>
-			// function resizeHandler ()
-			// {
-			// 	let videoTag = document.getElementsByTagName("video");
-			// 	let videoTagIndex = videoTag.length - 1;
-			// 	let videoTagStyle = videoTag[videoTagIndex].getAttribute("style");
-
-			// 	if (window.innerWidth > window.innerHeight) {
-			// 		// document.getElementById("warning-message").setAttribute("style", "display:none;");
-			// 		document.getElementById("warning-message").style.display = "none";
-			// 		// videoTag[videoTagIndex].setAttribute("style", "display:block;");
-			// 		videoTag[videoTagIndex].style.display = 'block';
-			// 		let canvas = document.getElementsByTagName("canvas");
-			// 		// canvas[0].setAttribute("style", "display:block;");
-			// 		canvas[0].style.display = 'block';
-			// 		document.getElementById( 'video' ).play();
-			// 	} else {
-			// 		// document.getElementById("warning-message").setAttribute("style", "display:block;");
-			// 		document.getElementById("warning-message").style.display = "flex";
-			// 		// document.getElementById("warning-message").style.align-items = "center";
-			// 		// document.getElementById("warning-message").style.justify-content = "center";
-			// 		// videoTag[videoTagIndex].setAttribute("style", "display:none;");
-			// 		videoTag[videoTagIndex].style.display = 'none';
-			// 		let canvas = document.getElementsByTagName("canvas");
-			// 		// canvas[0].setAttribute("style", "display:none;");
-			// 		canvas[0].style.display = 'none';
-			// 		document.getElementById( 'video' ).pause();
-			// 	}
-			// }
-			// function isLandscape() {
-			// 	let videoTag = document.getElementsByTagName("video");
-			// 	let videoTagIndex = videoTag.length - 1;
-			// 	if (window.innerWidth > window.innerHeight) {
-			// 		document.getElementById("warning-message").setAttribute("style", "display:none;");
-			// 		// videoTag[videoTagIndex].setAttribute("style", "display:block;");
-			// 		document.getElementsByTagName("canvas")[0].style.display = 'block';
-			// 	} else {
-			// 		document.getElementById("warning-message").setAttribute("style", "display:block;");
-			// 		// videoTag[videoTagIndex].setAttribute("style", "display:none;");
-			// 		document.getElementsByTagName("canvas")[0].style.display = 'none';
-			// 	}
-			// }
-			// window.onresize = function(event) {
-			// 	resizeHandler();
-			// }
-			// window.onload = function (event){
-			// 	isLandscape();
-			// }
-			// function isLandscape() {
-			// 	if (window.innerWidth > window.innerHeight) {
-			// 		document.getElementsByTagName("video")[0].style.display = 'block';
-			// 		document.getElementById("warning-message").style.display = 'none';
-			// 	} else {
-			// 		let video = document.getElementsByTagName("video")[0];
-			// 		video.style.display = 'none';
-			// 		document.getElementById("warning-message").style.display = 'block';
-			// 	}
-			// }
 			AFRAME.registerComponent('registerevents', {
 				init: function () {
 					//this handler don't work with a-marker-camera
 					var marker = this.el;
 					let video = document.querySelector("#vid");
 					let clickImg = document.getElementsByTagName("a-image");
-					let portraitImg = document.querySelector("#portraitOrient");
+					// let portraitImg = document.querySelector("#portraitOrient");
 					marker.addEventListener('markerFound', function() {
 						var markerId = marker.id;
 						if (window.innerWidth > window.innerHeight) {
@@ -121,6 +64,7 @@
 							{
 								clickImg[0].setAttribute("transparent", "true");
 								video.pause();
+								clickImg[1].setAttribute("transparent", "false");
 							}
 						} else {
 							clickImg[1].setAttribute("transparent", "true");
@@ -130,15 +74,19 @@
 				},
 				tick: function () {
 					let video = document.getElementsByTagName("video");
+					let clickImg = document.getElementsByTagName("a-image");
 					if (video.length > 1){
 						if (window.innerWidth > window.innerHeight) {
-							document.getElementsByTagName("video")[1].style.display = null;
-							document.getElementById("warning-message").style.display = 'none';
-						} else {
-							let video = document.getElementsByTagName("video")[1];
-							video.style.display = 'none';
-							document.getElementById("warning-message").style.display = 'block';
+							clickImg[1].setAttribute("transparent", "false");
 						}
+						// if (window.innerWidth > window.innerHeight) {
+						// 	document.getElementsByTagName("video")[1].style.display = null;
+						// 	document.getElementById("warning-message").style.display = 'none';
+						// } else {
+						// 	let video = document.getElementsByTagName("video")[1];
+						// 	video.style.display = 'none';
+						// 	document.getElementById("warning-message").style.display = 'block';
+						// }
 					}
 				},
 			});
@@ -148,15 +96,15 @@
 
 	<body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
 		<!-- <div id="wrapper" style="display:none;"> -->
-		<div id="warning-message" style="display:none;">
+		<!-- <div id="warning-message" style="display:none;">
 			<img src="data/HIRO_click.jpg">
-		</div>
+		</div> -->
 		<a-scene embedded arjs='sourceType: webcam;' vr-mode-ui="enabled: false">	<!--vr-mode-ui="enabled: false"-->
 		<!-- <a-scene embedded arjs='sourceType: webcam;'> -->
 			<a-assets>
 				<video crossOrigin="anonymous" id="vid" loop="true" type="video/mp4" src="data/video/sintel.mp4"></video>
 				<!-- <video crossOrigin="anonymous" id="vid" autoplay loop="true" type="video/mp4" src="data/video/vid.mp4" style ="display:none"></video> -->
-				<!-- <img id="portraitOrient" src="data/HIRO_click.jpg" style="display:none;"> -->
+				<img id="portraitOrient" src="data/portrait_disable.png" style="display:none;">
 				<img id="hiroClick" src="data/tap.png" style="display:none;">
 			</a-assets>
 
