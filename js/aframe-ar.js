@@ -8790,8 +8790,8 @@ AFRAME.registerSystem('arjs', {
 				clearInterval(timerId)
 				return
 			}
-			onResize()
-			// window.dispatchEvent(new Event('resize'));
+			// onResize()
+			window.dispatchEvent(new Event('resize'));
 		}, 1000/30)
 	},
 
