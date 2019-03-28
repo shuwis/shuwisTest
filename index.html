@@ -132,7 +132,7 @@
 					let video = document.getElementsByTagName("video");
 					if (video.length > 1){
 						if (window.innerWidth > window.innerHeight) {
-							document.getElementsByTagName("video")[0].style.display = 'block';
+							document.getElementsByTagName("video")[1].style.display = null;
 							document.getElementById("warning-message").style.display = 'none';
 						} else {
 							let video = document.getElementsByTagName("video")[1];
