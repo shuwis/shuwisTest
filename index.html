@@ -129,13 +129,16 @@
 					});
 				},
 				tick: function () {
-					if (window.innerWidth > window.innerHeight) {
-						document.getElementsByTagName("video")[0].style.display = 'block';
-						document.getElementById("warning-message").style.display = 'none';
-					} else {
-						let video = document.getElementsByTagName("video")[0];
-						video.style.display = 'none';
-						document.getElementById("warning-message").style.display = 'block';
+					let video = document.getElementsByTagName("video");
+					if (video.length > 1){
+						if (window.innerWidth > window.innerHeight) {
+							document.getElementsByTagName("video")[0].style.display = 'block';
+							document.getElementById("warning-message").style.display = 'none';
+						} else {
+							let video = document.getElementsByTagName("video")[0];
+							video.style.display = 'none';
+							document.getElementById("warning-message").style.display = 'block';
+						}
 					}
 				},
 			});
