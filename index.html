@@ -27,7 +27,6 @@
 		<!-- Register an aframe component that allows reacting to marker events -->
 
 		<script>
-			resizeHandler ();
 			function resizeHandler ()
 			{
 				let videoTag = document.getElementsByTagName("video");
@@ -72,7 +71,7 @@
 			window.onresize = function(event) {
 				resizeHandler();
 			}
-			
+
 			AFRAME.registerComponent('registerevents', {
 				init: function () {
 					//this handler don't work with a-marker-camera
@@ -107,6 +106,7 @@
 					});
 				},
 			});
+			resizeHandler ();
 		</script>
 	</head>
 
