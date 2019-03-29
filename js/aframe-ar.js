@@ -6158,8 +6158,10 @@ ARjs.Source.prototype.copyElementSizeTo = function(otherElement){
 		//portrait
 		otherElement.style.height = this.domElement.style.height
 		// otherElement.style.width = (parseInt(otherElement.style.height) * 4/3)+"px";
-		otherElement.style.width = (parseInt(otherElement.style.height) * 2/3)+"px";
-		otherElement.style.marginLeft = ((window.innerWidth- parseInt(otherElement.style.width))/2)+"px";
+		// otherElement.style.width = (parseInt(otherElement.style.height) * 2/3)+"px";
+		otherElement.style.width = this.domElement.style.width;
+		//otherElement.style.marginLeft = ((window.innerWidth- parseInt(otherElement.style.width))/2)+"px";
+		otherElement.style.marginLeft = 0;
 		otherElement.style.marginTop = 0;
 	}
 
